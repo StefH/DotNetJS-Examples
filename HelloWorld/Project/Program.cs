@@ -44,6 +44,9 @@ namespace HelloWorld
         public static string GetName() => "DotNet";
 
         [JSInvokable] // The method is invoked from JavaScript.
+        public static IEnumerable<object[]> GetHandlebars() => new HandlebarsTest().Test();
+
+        [JSInvokable] // The method is invoked from JavaScript.
         public static string TestException(string x) => throw new Exception("!!!");
     }
 }

@@ -5,12 +5,19 @@
 
 Open console (Ctrl+Shift+I) to see the output.
 
+<table id="table" border="1">
+    <tr>
+        <th>Template</th>
+        <th>Result</th>
+    </tr>
+</table>
+
 <script src="Project/bin/HelloWorld.js"></script>
 
 <script>
 
     // This function is invoked by DotNet.
-    window.getName = () => navigator.appName;
+    window.getName = () => `${navigator.appName} / ${navigator.appVersion}`;
 
     window.onload = async function () {
         // Booting the DotNet runtime and invoking entry point.
@@ -19,6 +26,20 @@ Open console (Ctrl+Shift+I) to see the output.
         // Invoking 'GetName()' method from DotNet.
         const guestName = HelloWorld.invoke("GetName");
         console.log(`Welcome, ${guestName}! Enjoy your global space.`);
+
+        var array = HelloWorld.invoke("GetHandlebars");
+        const table = document.getElementById("table");
+        for (var i = 0; i < array.length; i++) {
+            // create a new row
+            var newRow = table.insertRow(table.length);
+            for (var j = 0; j < array[i].length; j++) {
+                // create a new cell
+                var cell = newRow.insertCell(j);
+
+                // add value to the cell
+                cell.innerHTML = array[i][j];
+            }
+        }
 
         try {
             HelloWorld.invoke("TestException", '?');
