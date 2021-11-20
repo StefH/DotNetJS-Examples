@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Threading.Tasks;
 using DotNetJS;
 using Microsoft.JSInterop;
 
@@ -12,7 +13,7 @@ namespace HelloWorld
     public static class Program
     {
         // Main is invoked by the JavaScript runtime on boot.
-        public static void Main()
+        public static async Task Main()
         {
             // Invoking 'getName()' function from JavaScript.
             var hostName = JS.Invoke<string>("getName");
@@ -35,9 +36,14 @@ namespace HelloWorld
             {
                 Console.WriteLine(c);
             }
+
+            await Task.Delay(100);
         }
 
         [JSInvokable] // The method is invoked from JavaScript.
         public static string GetName() => "DotNet";
+
+        [JSInvokable] // The method is invoked from JavaScript.
+        public static string TestException(string x) => throw new Exception("!!!");
     }
 }

@@ -15,9 +15,17 @@ Open console (Ctrl+Shift+I) to see the output.
     window.onload = async function () {
         // Booting the DotNet runtime and invoking entry point.
         await HelloWorld.boot();
+
         // Invoking 'GetName()' method from DotNet.
         const guestName = HelloWorld.invoke("GetName");
         console.log(`Welcome, ${guestName}! Enjoy your global space.`);
+
+        try {
+            HelloWorld.invoke("TestException", '?');
+        }
+        catch (e) {
+            console.error(e);
+        }
     };
 
 </script>
